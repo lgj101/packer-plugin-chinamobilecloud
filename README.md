@@ -1,6 +1,6 @@
 # Packer Plugin for ChinaMobileCloud ECS
 
-This is a [HashiCorp Packer](https://www.packer.io/) plugin for creating [ChinaMobile Cloud ECS](https://www.huaweicloud.com/) image.
+This is a [HashiCorp Packer](https://www.packer.io/) plugin for creating [ChinaMobile Cloud ECS](https://ecloud.10086.cn/) image.
 
 ## Installation
 
