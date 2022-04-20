@@ -11,6 +11,8 @@
 *.out
 
 /packer-builder-huaweicloud-ecs
+/packer-builder-chinamobilecloud-ecs
+/packer-plugin-chinamobilecloud
 /packer-plugin-huaweicloud
 /dist/
 .*.swp

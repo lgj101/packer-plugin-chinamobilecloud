@@ -15,7 +15,7 @@ import (
 )
 
 const (
-	UserAgent      = "packer-builder-huaweicloud-ecs"
+	UserAgent      = "packer-builder-chinamobilecloud-ecs"
 	DefaultAuthURL = "https://iam.myhuaweicloud.com:443/v3"
 )
 
