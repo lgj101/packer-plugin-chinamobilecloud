@@ -5,6 +5,8 @@ package ecs
 import (
 	"context"
 	"fmt"
+	"log"
+	"os"
 
 	"github.com/hashicorp/hcl/v2/hcldec"
 	"github.com/hashicorp/packer-plugin-sdk/common"
@@ -17,7 +19,7 @@ import (
 )
 
 // The unique ID for this builder
-const BuilderId = "huawei.huaweicloud"
+const BuilderId = "chinamobie.hecloud"
 
 type Config struct {
 	common.PackerConfig `mapstructure:",squash"`
@@ -64,6 +66,14 @@ func (b *Builder) Prepare(raws ...interface{}) ([]string, []string, error) {
 
 	packer.LogSecretFilter.Set(b.config.AccessKey, b.config.SecretKey)
 	return nil, nil, nil
+}
+func init() {
+	log.SetFlags(log.Ldate | log.Ltime | log.Lshortfile)
+	logFile, err := os.OpenFile("/Users/namo/code/go/src/github.com/hashicorp/packer_log/c.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
+	if err != nil {
+		log.Panic("打开日志文件异常")
+	}
+	log.SetOutput(logFile)
 }
 
 func (b *Builder) Run(ctx context.Context, ui packer.Ui, hook packer.Hook) (packer.Artifact, error) {

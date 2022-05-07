@@ -39,6 +39,8 @@ func (s *StepSourceImageInfo) Run(ctx context.Context, state multistep.StateBag)
 		return multistep.ActionContinue
 	}
 
+	log.Println("create Image")
+
 	client, err := config.imageV2Client()
 	if err != nil {
 		err := fmt.Errorf("error creating image client: %s", err)

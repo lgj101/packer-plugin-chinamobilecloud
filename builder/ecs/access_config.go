@@ -15,8 +15,9 @@ import (
 )
 
 const (
-	UserAgent      = "packer-builder-chinamobilecloud-ecs"
-	DefaultAuthURL = "https://iam.myhuaweicloud.com:443/v3"
+	UserAgent          = "packer-builder-chinamobilecloud-ecs"
+	DefaultAuthURL     = "https://iam.cidc-rp-11.joint.cmecloud.cn/v3"
+	DefaultNetworkName = "neutron"
 )
 
 // AccessConfig is for common configuration related to HuaweiCloud access
@@ -59,6 +60,7 @@ func (c *AccessConfig) Prepare(ctx *interpolate.Context) []error {
 	}
 	if c.Region == "" {
 		c.Region = os.Getenv("HW_REGION_NAME")
+		//c.IdentityEndpoint = "https://iam." + c.Region + ".joint.cmecloud.cn/v3"
 	}
 	// access parameters validation
 	if c.AccessKey == "" || c.SecretKey == "" || c.Region == "" {
@@ -165,9 +167,17 @@ func (c *AccessConfig) blockStorageV3Client() (*golangsdk.ServiceClient, error) 
 	})
 }
 
+func (c *AccessConfig) blockStorageV2Client() (*golangsdk.ServiceClient, error) {
+	return openstack.NewBlockStorageV2(c.hwClient, golangsdk.EndpointOpts{
+		Region:       c.Region,
+		Availability: c.getEndpointType(),
+	})
+}
+
 func (c *AccessConfig) networkV2Client() (*golangsdk.ServiceClient, error) {
 	return openstack.NewNetworkV2(c.hwClient, golangsdk.EndpointOpts{
 		Region:       c.Region,
+		Name:         DefaultNetworkName,
 		Availability: c.getEndpointType(),
 	})
 }
@@ -175,6 +185,7 @@ func (c *AccessConfig) networkV2Client() (*golangsdk.ServiceClient, error) {
 func (c *AccessConfig) vpcClient() (*golangsdk.ServiceClient, error) {
 	return huaweisdk.NewNetworkV1(c.hwClient, golangsdk.EndpointOpts{
 		Region:       c.Region,
+		Name:         DefaultNetworkName,
 		Availability: c.getEndpointType(),
 	})
 }

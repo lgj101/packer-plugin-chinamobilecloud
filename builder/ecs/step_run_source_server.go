@@ -61,6 +61,8 @@ func (s *StepRunSourceServer) Run(ctx context.Context, state multistep.StateBag)
 		}
 	}
 
+	log.Println(networks)
+
 	availabilityZone := state.Get("availability_zone").(string)
 	serverOpts := servers.CreateOpts{
 		Name:             s.Name,

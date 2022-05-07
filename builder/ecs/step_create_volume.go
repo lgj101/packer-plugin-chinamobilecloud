@@ -3,7 +3,6 @@ package ecs
 import (
 	"context"
 	"fmt"
-
 	"github.com/hashicorp/packer-plugin-sdk/multistep"
 	"github.com/hashicorp/packer-plugin-sdk/packer"
 	"github.com/huaweicloud/golangsdk/openstack/blockstorage/v3/volumes"
@@ -29,7 +28,7 @@ func (s *StepCreateVolume) Run(ctx context.Context, state multistep.StateBag) mu
 	sourceImage := state.Get("source_image").(string)
 
 	// We will need Block Storage and Image services clients.
-	blockStorageClient, err := config.blockStorageV3Client()
+	blockStorageClient, err := config.blockStorageV2Client()
 	if err != nil {
 		err = fmt.Errorf("Error initializing block storage client: %s", err)
 		state.Put("error", err)
@@ -101,7 +100,7 @@ func (s *StepCreateVolume) Cleanup(state multistep.StateBag) {
 	config := state.Get("config").(*Config)
 	ui := state.Get("ui").(packer.Ui)
 
-	blockStorageClient, err := config.blockStorageV3Client()
+	blockStorageClient, err := config.blockStorageV2Client()
 	if err != nil {
 		ui.Error(fmt.Sprintf(
 			"Error cleaning up volume. Please delete the volume manually: %s", s.volumeID))
