@@ -20,15 +20,15 @@ const (
 	DefaultNetworkName = "neutron"
 )
 
-// AccessConfig is for common configuration related to HuaweiCloud access
+// AccessConfig is for common configuration related to HeCloud access
 type AccessConfig struct {
-	// The access key of the HuaweiCloud to use.
+	// The access key of the HeCloud to use.
 	// If omitted, the HW_ACCESS_KEY environment variable is used.
 	AccessKey string `mapstructure:"access_key" required:"true"`
-	// The secret key of the HuaweiCloud to use.
+	// The secret key of the HeCloud to use.
 	// If omitted, the HW_SECRET_KEY environment variable is used.
 	SecretKey string `mapstructure:"secret_key" required:"true"`
-	// Specifies the HuaweiCloud region in which to launch the server to create the image.
+	// Specifies the HeCloud region in which to launch the server to create the image.
 	// If omitted, the HW_REGION_NAME environment variable is used.
 	Region string `mapstructure:"region" required:"true"`
 
@@ -41,7 +41,7 @@ type AccessConfig struct {
 
 	// The Identity authentication URL.
 	// If omitted, the HW_AUTH_URL environment variable is used.
-	// This is not required if you use HuaweiCloud.
+	// This is not required if you use HeCloud.
 	IdentityEndpoint string `mapstructure:"auth_url" required:"false"`
 	// Trust self-signed SSL certificates.
 	// By default this is false.

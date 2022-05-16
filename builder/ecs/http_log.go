@@ -35,8 +35,8 @@ func (lrt *LogRoundTripper) RoundTrip(request *http.Request) (*http.Response, er
 	var err error
 
 	if lrt.Debug {
-		log.Printf("[DEBUG] HuaweiCloud Request URL: %s %s", request.Method, request.URL)
-		log.Printf("[DEBUG] HuaweiCloud Request Headers:\n%s", FormatHeaders(request.Header, "\n"))
+		log.Printf("[DEBUG] HeCloud Request URL: %s %s", request.Method, request.URL)
+		log.Printf("[DEBUG] HeCloud Request Headers:\n%s", FormatHeaders(request.Header, "\n"))
 
 		if request.Body != nil {
 			request.Body, err = lrt.logRequest(request.Body, request.Header.Get("Content-Type"))
@@ -52,8 +52,8 @@ func (lrt *LogRoundTripper) RoundTrip(request *http.Request) (*http.Response, er
 	}
 
 	if lrt.Debug {
-		log.Printf("[DEBUG] HuaweiCloud Response Code: %d", response.StatusCode)
-		log.Printf("[DEBUG] HuaweiCloud Response Headers:\n%s", FormatHeaders(response.Header, "\n"))
+		log.Printf("[DEBUG] HeCloud Response Code: %d", response.StatusCode)
+		log.Printf("[DEBUG] HeCloud Response Headers:\n%s", FormatHeaders(response.Header, "\n"))
 
 		response.Body, err = lrt.logResponse(response.Body, response.Header.Get("Content-Type"))
 	}
@@ -75,9 +75,9 @@ func (lrt *LogRoundTripper) logRequest(original io.ReadCloser, contentType strin
 	// Handle request contentType
 	if strings.HasPrefix(contentType, "application/json") {
 		debugInfo := lrt.formatJSON(bs.Bytes())
-		log.Printf("[DEBUG] HuaweiCloud Request Body: %s", debugInfo)
+		log.Printf("[DEBUG] HeCloud Request Body: %s", debugInfo)
 	} else {
-		log.Printf("[DEBUG] HuaweiCloud Request Body: %s", bs.String())
+		log.Printf("[DEBUG] HeCloud Request Body: %s", bs.String())
 	}
 
 	return ioutil.NopCloser(strings.NewReader(bs.String())), nil
@@ -95,12 +95,12 @@ func (lrt *LogRoundTripper) logResponse(original io.ReadCloser, contentType stri
 		}
 		debugInfo := lrt.formatJSON(bs.Bytes())
 		if debugInfo != "" {
-			log.Printf("[DEBUG] HuaweiCloud Response Body: %s", debugInfo)
+			log.Printf("[DEBUG] HeCloud Response Body: %s", debugInfo)
 		}
 		return ioutil.NopCloser(strings.NewReader(bs.String())), nil
 	}
 
-	log.Printf("[DEBUG] Not logging because HuaweiCloud response body isn't JSON")
+	log.Printf("[DEBUG] Not logging because HeCloud response body isn't JSON")
 	return original, nil
 }
 
@@ -111,7 +111,7 @@ func (lrt *LogRoundTripper) formatJSON(raw []byte) string {
 
 	err := json.Unmarshal(raw, &data)
 	if err != nil {
-		log.Printf("[DEBUG] Unable to parse HuaweiCloud JSON: %s", err)
+		log.Printf("[DEBUG] Unable to parse HeCloud JSON: %s", err)
 		return string(raw)
 	}
 
@@ -146,7 +146,7 @@ func (lrt *LogRoundTripper) formatJSON(raw []byte) string {
 
 	pretty, err := json.MarshalIndent(data, "", "  ")
 	if err != nil {
-		log.Printf("[DEBUG] Unable to re-marshal HuaweiCloud JSON: %s", err)
+		log.Printf("[DEBUG] Unable to re-marshal HeCloud JSON: %s", err)
 		return string(raw)
 	}
 

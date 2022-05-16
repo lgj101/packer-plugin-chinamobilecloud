@@ -19,11 +19,11 @@ type RunConfig struct {
 	Comm communicator.Config `mapstructure:",squash"`
 	// The type of interface to connect via SSH, valid values are "public"
 	// and "private", and the default behavior is to connect via
-	// whichever is returned first from the HuaweiCloud API.
+	// whichever is returned first from the HeCloud API.
 	SSHInterface string `mapstructure:"ssh_interface" required:"false"`
 	// The IP version to use for SSH connections, valid values are `4` and `6`.
 	// Useful on dual stacked instances where the default behavior is to
-	// connect via whichever IP address is returned first from the HuaweiCloud
+	// connect via whichever IP address is returned first from the HeCloud
 	// API.
 	SSHIPVersion string `mapstructure:"ssh_ip_version" required:"false"`
 	// The ID of the base image to use. This is the image that will
@@ -116,7 +116,7 @@ type RunConfig struct {
 	// called server properties in some documentation. The strings have a max
 	// size of 255 bytes each.
 	InstanceMetadata map[string]string `mapstructure:"instance_metadata" required:"false"`
-	// Whether to force the HuaweiCloud instance to be forcefully deleted. This
+	// Whether to force the HeCloud instance to be forcefully deleted. This
 	// is useful for environments that have reclaim / soft deletion enabled. By
 	// default this is false.
 	ForceDelete bool `mapstructure:"force_delete" required:"false"`
