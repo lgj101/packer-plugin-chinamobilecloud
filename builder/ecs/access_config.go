@@ -5,13 +5,13 @@ package ecs
 import (
 	"crypto/tls"
 	"fmt"
-	"net/http"
-	"os"
-
 	"github.com/hashicorp/packer-plugin-sdk/template/interpolate"
 	"github.com/huaweicloud/golangsdk"
 	"github.com/huaweicloud/golangsdk/openstack"
 	huaweisdk "github.com/huaweicloud/golangsdk/openstack"
+	"net/http"
+	"os"
+	"strings"
 )
 
 const (
@@ -60,13 +60,15 @@ func (c *AccessConfig) Prepare(ctx *interpolate.Context) []error {
 	}
 	if c.Region == "" {
 		c.Region = os.Getenv("HW_REGION_NAME")
-		//c.IdentityEndpoint = "https://iam." + c.Region + ".joint.cmecloud.cn/v3"
 	}
+	
 	// access parameters validation
 	if c.AccessKey == "" || c.SecretKey == "" || c.Region == "" {
 		paraErr := fmt.Errorf("access_key, secret_key and region must be set")
 		return []error{paraErr}
 	}
+
+	c.Region = strings.ToUpper(c.Region)
 
 	if c.ProjectID == "" {
 		c.ProjectID = os.Getenv("HW_PROJECT_ID")
